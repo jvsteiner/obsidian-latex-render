@@ -152,7 +152,7 @@ export default class LatexRenderer extends Plugin {
 			) {
 				// console.log("Using cached SVG: ", md5Hash);
 				//skip - the DOM API or the Obsidian helper functions don't seem to have a way to insert an SVG element
-				el.innerHTML = fs.readFileSync(svgPath).toString();
+				el.innerHTML = '<img src="data:image/svg+xml;utf8,' + encodeURIComponent(fs.readFileSync(svgPath).toString()) + '" alt=""/>';
 				this.addFileToCache(md5Hash, ctx.sourcePath);
 				resolve();
 			} else {
@@ -163,7 +163,7 @@ export default class LatexRenderer extends Plugin {
 						if (this.settings.enableCache)
 							this.addFileToCache(md5Hash, ctx.sourcePath);
 						//skip - the DOM API or the Obsidian helper functions don't seem to have a way to insert an SVG element
-						el.innerHTML = v;
+						el.innerHTML = '<img src="data:image/svg+xml;utf8,' + encodeURIComponent(v) + '" alt=""/>';
 						resolve();
 					})
 					.catch((err) => {
